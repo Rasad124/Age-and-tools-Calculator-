@@ -1,11 +1,13 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Royal Multi Tools | Age, BMI, Percentage Calculator</title>
-<meta name="description" content="Royal Dark Multi Tools: Age, BMI, Percentage, Days Calculator Bangladesh. Premium & eye-catching UI.">
+<meta name="description" content="Royal Dark Multi Tools: বয়স, BMI, Percentage, Days Calculator বাংলাদেশ। Premium & eye-catching UI.">
+<meta name="keywords" content="Age calculator, বয়স গণনা, BMI, পার্সেন্টেজ, Days calculator, Bangladesh, বাংলাদেশ, Royal Tools">
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
@@ -117,10 +119,10 @@ button.calcBtn:hover{transform: scale(1.03);}
 <h1>Royal Multi Tools</h1>
 
 <div class="menu">
-<button onclick="showTool('age')">Age</button>
+<button onclick="showTool('age')">Age / বয়স</button>
 <button onclick="showTool('bmi')">BMI</button>
-<button onclick="showTool('percent')">Percentage</button>
-<button onclick="showTool('days')">Days</button>
+<button onclick="showTool('percent')">Percentage / পার্সেন্টেজ</button>
+<button onclick="showTool('days')">Days / দিন</button>
 </div>
 
 <div class="ad">Top Ad</div>
@@ -129,36 +131,43 @@ button.calcBtn:hover{transform: scale(1.03);}
 
 <!-- AGE -->
 <div id="age" class="tool active">
-<h2>Age Calculator</h2>
+<h2>Age Calculator / বয়স গণনা</h2>
+<label for="dob">আপনার জন্মদিন নির্বাচন করুন:</label>
 <input type="date" id="dob">
-<button class="calcBtn" onclick="calcAge()">Calculate</button>
+<button class="calcBtn" onclick="calcAge()">গণনা করুন</button>
 <p id="ageResult" class="result"></p>
 </div>
 
 <!-- BMI -->
 <div id="bmi" class="tool">
-<h2>BMI Calculator</h2>
+<h2>BMI Calculator / BMI গণনা</h2>
+<label for="weight">ওজন (কেজি):</label>
 <input type="number" id="weight" placeholder="Weight (kg)">
+<label for="height">উচ্চতা (মিটার):</label>
 <input type="number" id="height" placeholder="Height (m)">
-<button class="calcBtn" onclick="calcBMI()">Calculate</button>
+<button class="calcBtn" onclick="calcBMI()">গণনা করুন</button>
 <p id="bmiResult" class="result"></p>
 </div>
 
 <!-- PERCENT -->
 <div id="percent" class="tool">
-<h2>Percentage Calculator</h2>
+<h2>Percentage Calculator / পার্সেন্টেজ গণনা</h2>
+<label for="total">মোট মান:</label>
 <input type="number" id="total" placeholder="Total">
+<label for="part">অংশ:</label>
 <input type="number" id="part" placeholder="Part">
-<button class="calcBtn" onclick="calcPercent()">Calculate</button>
+<button class="calcBtn" onclick="calcPercent()">গণনা করুন</button>
 <p id="percentResult" class="result"></p>
 </div>
 
 <!-- DAYS -->
 <div id="days" class="tool">
-<h2>Days Between Dates</h2>
+<h2>Days Between Dates / তারিখের মধ্যে দিন গণনা</h2>
+<label for="d1">প্রথম তারিখ:</label>
 <input type="date" id="d1">
+<label for="d2">দ্বিতীয় তারিখ:</label>
 <input type="date" id="d2">
-<button class="calcBtn" onclick="calcDays()">Calculate</button>
+<button class="calcBtn" onclick="calcDays()">গণনা করুন</button>
 <p id="daysResult" class="result"></p>
 </div>
 
@@ -170,6 +179,7 @@ button.calcBtn:hover{transform: scale(1.03);}
 <div style="margin-top:30px;color:#94a3b8;">
 <h2>All in One Calculator Bangladesh</h2>
 <p>Royal Multi Tools আপনাকে বয়স, BMI, পার্সেন্টেজ এবং Days calculator সহ আরও অনেক ক্যালকুলেটর দিয়ে সাপোর্ট করে। Premium Royal Dark Theme UI দিয়ে আরও আকর্ষণীয় অভিজ্ঞতা।</p>
+<p>Age, BMI, Percentage, Days calculator—সবই এক জায়গায়। বাংলাদেশ ও আন্তর্জাতিক উভয় ব্যবহারকারীর জন্য।</p>
 </div>
 
 </div>
@@ -183,20 +193,22 @@ document.getElementById(id).classList.add('active');
 
 // AGE
 function calcAge(){
-let dob=new Date(document.getElementById("dob").value);
+let dob=document.getElementById("dob").value;
+if(!dob){alert("আপনার জন্মদিন নির্বাচন করুন"); return;}
+dob=new Date(dob);
 let today=new Date();
-if(!dob.getTime()){alert("Enter date");return;}
 let age=today.getFullYear()-dob.getFullYear();
 let m=today.getMonth()-dob.getMonth();
-if(m<0) age--;
-document.getElementById("ageResult").innerText="Age: "+age+" Years";
+let d=today.getDate()-dob.getDate();
+if(m<0 || (m===0 && d<0)) age--;
+document.getElementById("ageResult").innerText="বয়স: "+age+" বছর";
 }
 
 // BMI
 function calcBMI(){
 let w=document.getElementById("weight").value;
 let h=document.getElementById("height").value;
-if(!w || !h){alert("Enter weight & height");return;}
+if(!w || !h){alert("ওজন ও উচ্চতা প্রবেশ করুন");return;}
 let bmi=(w/(h*h)).toFixed(2);
 document.getElementById("bmiResult").innerText="BMI: "+bmi;
 }
@@ -205,20 +217,22 @@ document.getElementById("bmiResult").innerText="BMI: "+bmi;
 function calcPercent(){
 let total=document.getElementById("total").value;
 let part=document.getElementById("part").value;
-if(!total || !part){alert("Enter both values");return;}
+if(!total || !part){alert("উভয় মান প্রবেশ করুন");return;}
 let p=(part/total*100).toFixed(2);
 document.getElementById("percentResult").innerText=p+"%";
 }
 
 // Days
 function calcDays(){
-let d1=new Date(document.getElementById("d1").value);
-let d2=new Date(document.getElementById("d2").value);
-if(!d1 || !d2){alert("Enter both dates");return;}
+let d1=document.getElementById("d1").value;
+let d2=document.getElementById("d2").value;
+if(!d1 || !d2){alert("উভয় তারিখ নির্বাচন করুন");return;}
+d1=new Date(d1);
+d2=new Date(d2);
 let diff=Math.abs((d2-d1)/(1000*60*60*24));
-document.getElementById("daysResult").innerText=diff+" days";
+document.getElementById("daysResult").innerText=diff+" দিন";
 }
 </script>
 
 </body>
-  </html>
+</html>
